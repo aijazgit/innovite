@@ -1,6 +1,5 @@
 database:
   dbname: "gorm.db"
-  dbpath: "."
 
 monitor:
   dirpath: "/etc/temp"

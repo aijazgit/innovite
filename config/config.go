@@ -33,14 +33,24 @@ func Config(slog *zap.SugaredLogger) (*Configs, error) {
 		return nil, err
 	}
 
-	// Set undefined variables, if required
-	viper.SetDefault("database.dbname", "gorm.db")
-
 	err := viper.Unmarshal(&configs)
 	if err != nil {
 		slog.Errorw("failed unmarshal config", "error", err)
 		return nil, err
 	}
+
+	dbname := viper.GetString("database.dbname")
+	if len(dbname) == 0 {
+		dbname = configs.Database.DBName
+		viper.SetDefault("database.dbname", configs.Database.DBName)
+	}
+	dirpath := viper.GetString("monitor.dirpath")
+	if len(dirpath) == 0 {
+		dirpath = configs.Monitor.DirPath
+		viper.SetDefault("monitor.dirpath", configs.Monitor.DirPath)
+	}
+
+	configs = Configs{Database{dbname}, Monitor{dirpath}}
 
 	slog.Infow("config info", "dbname", configs.Database.DBName)
 	slog.Infow("config info", "monitor dirpath", configs.Monitor.DirPath)

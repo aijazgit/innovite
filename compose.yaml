@@ -3,7 +3,7 @@ services:
     build: .
     volumes:
       - type: bind
-        source: /home/think/aq/temp
+        source: /home/think/aq/temp2
         target: /etc/temp
     environment:
       database_dbname: "gorm.db"
