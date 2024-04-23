@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    volumes:
+      - type: bind
+        source: /home/think/aq/temp
+        target: /etc/temp
+    environment:
+      database_dbname: "gorm.db"
+      monitor_dirpath: "/etc/temp"
